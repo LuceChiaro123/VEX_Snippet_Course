@@ -1,0 +1,32 @@
+int count = 400;
+float bound = 10.0;
+float tau = 6.28318530718; // pi * 2
+
+// returns the cartesian coordinates from polar representation
+// on the x-z plane (notice that y = 0)
+//
+
+vector polar_to_cartesian(float theta; float radius;) {
+    return set(cos(theta)*radius, 0, sin(theta)*radius);
+}
+
+float phi = (1 + sqrt(5)) / 2;  // 1.618...
+
+// calculate the golden angle in radians
+float golden_angle = tau * (2 - phi);
+
+// we could have done this a few ways because:
+// (2 - phi)  ==  1 - (1 / phi)  ==  1 / phi^2
+
+float radius;
+float theta = 0;
+vector pos;
+
+for (int n=0; n<count; n++) {
+
+    radius = bound * pow((float(n) / float(count)), chf("radius_falloff"));
+    theta += golden_angle;
+
+    pos = polar_to_cartesian(theta, radius);
+    addpoint(geoself(), pos);
+}
