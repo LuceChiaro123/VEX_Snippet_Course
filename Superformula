@@ -1,0 +1,39 @@
+// init values //
+
+int segments = ch('resolution');
+
+float a = 0.5;
+float b = 0.5;
+float m = 2.5;
+float n1 = 5.0;
+float n2 = 18.0;
+float n3 = 18.0;     
+
+float step = 2*$PI / segments ;
+
+float phi = 0; 
+vector pos = {0,0,0};
+
+for (float o = 0.0 ; o<0.5; o+=0.01) {
+
+    for (int i = 0; i<segments; i++){
+
+        //superformula 2d//
+
+        float c = pow(abs(cos((m * phi) /4) / a), n2);
+        float s = pow(abs(sin((m * phi) /4) / a), n2);
+        float r = pow(( c + s ) , -(1/n1));
+
+        //polar to cartesian//
+     
+        pos.x = r * cos(phi);
+        pos.y = r * sin(phi);
+
+        addpoint(geoself(), pos);
+        phi += step;
+
+        }
+    
+    a += o;
+    b += o * 0.1;
+}
